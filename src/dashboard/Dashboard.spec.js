@@ -78,8 +78,8 @@ describe('Check if disabled button functionality works', () => {
   it('Should not be able to lock before closing the gate', () => {
     const { getByTestId } = render(<Dashboard />);
     const lockUnlockBtn = getByTestId('lockUnlockButton');
-    const openCloseBtn = getByTestId('openCloseButton');
     const lockUnlockedDisplay = getByTestId('lockUnlockedDisplay');
+    expect(lockUnlockBtn).toHaveAttribute('disabled');
     expect(lockUnlockedDisplay.textContent).toBe('Unlocked');
     fireEvent.click(lockUnlockBtn);
     expect(lockUnlockedDisplay.textContent).toBe('Unlocked');
@@ -91,9 +91,11 @@ describe('Check if disabled button functionality works', () => {
     const openCloseBtn = getByTestId('openCloseButton');
     const lockUnlockedDisplay = getByTestId('lockUnlockedDisplay');
     const openClosedDisplay = getByTestId('openClosedDisplay');
+    expect(lockUnlockBtn).toHaveAttribute('disabled');
     fireEvent.click(openCloseBtn);
     fireEvent.click(lockUnlockBtn);
     fireEvent.click(openCloseBtn);
+    expect(openCloseBtn).toHaveAttribute('disabled');
     expect(lockUnlockedDisplay.textContent).toBe('Locked');
     expect(openClosedDisplay.textContent).toBe('Closed');
   });
