@@ -80,6 +80,7 @@ describe('Check if disabled button functionality works', () => {
     const lockUnlockBtn = getByTestId('lockUnlockButton');
     const lockUnlockedDisplay = getByTestId('lockUnlockedDisplay');
     expect(lockUnlockBtn).toHaveAttribute('disabled');
+    expect(lockUnlockBtn).toBeDisabled();
     expect(lockUnlockedDisplay.textContent).toBe('Unlocked');
     fireEvent.click(lockUnlockBtn);
     expect(lockUnlockedDisplay.textContent).toBe('Unlocked');
@@ -95,6 +96,7 @@ describe('Check if disabled button functionality works', () => {
     fireEvent.click(openCloseBtn);
     fireEvent.click(lockUnlockBtn);
     fireEvent.click(openCloseBtn);
+    expect(openCloseBtn).toBeDisabled();
     expect(openCloseBtn).toHaveAttribute('disabled');
     expect(lockUnlockedDisplay.textContent).toBe('Locked');
     expect(openClosedDisplay.textContent).toBe('Closed');
