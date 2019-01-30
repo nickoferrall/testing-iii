@@ -21,7 +21,6 @@ class Dashboard extends React.Component {
           toggleLocked={this.toggleLocked}
           toggleClosed={this.toggleClosed}
         />
-        <h1 data-testid="esp">Vamos</h1>
       </>
     );
   }

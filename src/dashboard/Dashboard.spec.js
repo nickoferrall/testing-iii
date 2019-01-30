@@ -5,12 +5,6 @@ import 'jest-dom/extend-expect';
 
 import Dashboard from './Dashboard';
 
-it('Should display vamos', () => {
-  const { getByTestId } = render(<Dashboard />);
-  const spanishWord = getByTestId('esp');
-  expect(spanishWord).toHaveTextContent('Vamos');
-});
-
 describe('Open/Closed button tests', () => {
   it('Check if open to start with', () => {
     const { getByTestId } = render(<Dashboard />);
@@ -84,9 +78,47 @@ describe('Check if disabled button functionality works', () => {
   it('Should not be able to lock before closing the gate', () => {
     const { getByTestId } = render(<Dashboard />);
     const lockUnlockBtn = getByTestId('lockUnlockButton');
+    const openCloseBtn = getByTestId('openCloseButton');
     const lockUnlockedDisplay = getByTestId('lockUnlockedDisplay');
     expect(lockUnlockedDisplay.textContent).toBe('Unlocked');
     fireEvent.click(lockUnlockBtn);
     expect(lockUnlockedDisplay.textContent).toBe('Unlocked');
+  });
+
+  it('When the gate is locked, we should not be able to open it', () => {
+    const { getByTestId } = render(<Dashboard />);
+    const lockUnlockBtn = getByTestId('lockUnlockButton');
+    const openCloseBtn = getByTestId('openCloseButton');
+    const lockUnlockedDisplay = getByTestId('lockUnlockedDisplay');
+    const openClosedDisplay = getByTestId('openClosedDisplay');
+    fireEvent.click(openCloseBtn);
+    fireEvent.click(lockUnlockBtn);
+    fireEvent.click(openCloseBtn);
+    expect(lockUnlockedDisplay.textContent).toBe('Locked');
+    expect(openClosedDisplay.textContent).toBe('Closed');
+  });
+});
+
+describe('Check full functionality', () => {
+  it('Should close, lock, unlock and open', () => {
+    const { getByTestId } = render(<Dashboard />);
+    const lockUnlockBtn = getByTestId('lockUnlockButton');
+    const openCloseBtn = getByTestId('openCloseButton');
+    const lockUnlockedDisplay = getByTestId('lockUnlockedDisplay');
+    const openClosedDisplay = getByTestId('openClosedDisplay');
+    expect(lockUnlockedDisplay.textContent).toBe('Unlocked');
+    expect(openClosedDisplay.textContent).toBe('Open');
+    fireEvent.click(openCloseBtn);
+    expect(lockUnlockedDisplay.textContent).toBe('Unlocked');
+    expect(openClosedDisplay.textContent).toBe('Closed');
+    fireEvent.click(lockUnlockBtn);
+    expect(lockUnlockedDisplay.textContent).toBe('Locked');
+    expect(openClosedDisplay.textContent).toBe('Closed');
+    fireEvent.click(lockUnlockBtn);
+    expect(lockUnlockedDisplay.textContent).toBe('Unlocked');
+    expect(openClosedDisplay.textContent).toBe('Closed');
+    fireEvent.click(openCloseBtn);
+    expect(lockUnlockedDisplay.textContent).toBe('Unlocked');
+    expect(openClosedDisplay.textContent).toBe('Open');
   });
 });
