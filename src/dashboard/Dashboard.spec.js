@@ -126,3 +126,29 @@ describe('Check full functionality', () => {
     expect(openClosedDisplay.textContent).toBe('Open');
   });
 });
+
+describe('Check that classes toggle', () => {
+  it('Check that the display classes are green-led', () => {
+    const { getByTestId } = render(<Dashboard />);
+    const lockUnlockedDisplay = getByTestId('lockUnlockedDisplay');
+    const openClosedDisplay = getByTestId('openClosedDisplay');
+    expect(lockUnlockedDisplay.classList.contains('green-led')).toBe(true);
+    expect(openClosedDisplay.classList.contains('green-led')).toBe(true);
+  });
+
+  it('Display classes should toggle after being clicked', () => {
+    const { getByTestId } = render(<Dashboard />);
+    const lockUnlockedDisplay = getByTestId('lockUnlockedDisplay');
+    const openClosedDisplay = getByTestId('openClosedDisplay');
+    const lockUnlockBtn = getByTestId('lockUnlockButton');
+    const openCloseBtn = getByTestId('openCloseButton');
+    fireEvent.click(openCloseBtn);
+    fireEvent.click(lockUnlockBtn);
+    expect(lockUnlockedDisplay.classList.contains('red-led')).toBe(true);
+    expect(openClosedDisplay.classList.contains('red-led')).toBe(true);
+    fireEvent.click(lockUnlockBtn);
+    fireEvent.click(openCloseBtn);
+    expect(lockUnlockedDisplay.classList.contains('green-led')).toBe(true);
+    expect(openClosedDisplay.classList.contains('green-led')).toBe(true);
+  });
+});
