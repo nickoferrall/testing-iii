@@ -6,15 +6,19 @@ const Display = ({ closed, locked }) => {
 
   return (
     <div className="display panel">
-      <div className={lockedClass}>{locked ? 'Locked' : 'Unlocked'}</div>
-      <div className={closedClass}>{closed ? 'Closed' : 'Open'}</div>
+      <div data-testid="lockUnlockedDisplay" className={lockedClass}>
+        {locked ? 'Locked' : 'Unlocked'}
+      </div>
+      <div data-testid="openClosedDisplay" className={closedClass}>
+        {closed ? 'Closed' : 'Open'}
+      </div>
     </div>
   );
 };
 
 Display.defaultProps = {
   closed: false,
-  locked: false,
+  locked: false
 };
 
 export default Display;
